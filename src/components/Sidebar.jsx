@@ -18,7 +18,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2 className="logo">Smart Toll</h2>
+      <h2 className="logo">Smart Toll </h2>
       <ul>
         <li>
           <NavLink
