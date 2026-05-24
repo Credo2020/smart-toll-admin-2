@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
-import { collection, getDocs, updateDoc, addDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import "../styles/dashboard.css";
 
 function Vehicles() {
@@ -29,6 +36,23 @@ function Vehicles() {
       status: status === "active" ? "blocked" : "active",
     });
     fetchUsers();
+  };
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this vehicle permanently?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteDoc(doc(db, "users", id));
+      alert("Vehicle deleted successfully");
+      fetchUsers();
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting vehicle");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -79,14 +103,22 @@ function Vehicles() {
               <td>{user.balance}</td>
               <td>{user.status}</td>
               <td>
-                <button
-                  className={
-                    user.status === "active" ? "block-btn" : "unblock-btn"
-                  }
-                  onClick={() => toggleBlock(user.id, user.status)}
-                >
-                  {user.status === "active" ? "Block" : "Unblock"}
-                </button>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <button
+                    className={
+                      user.status === "active" ? "block-btn" : "unblock-btn"
+                    }
+                    onClick={() => toggleBlock(user.id, user.status)}
+                  >
+                    {user.status === "active" ? "Block" : "Unblock"}
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(user.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

@@ -133,6 +133,19 @@ table td {
   border-radius: 5px;
 }
 
+.delete-btn {
+  background: #991B1B;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-btn:hover {
+  background: #7F1D1D;
+}
+
 .form-box {
   background: white;
   padding: 20px;
