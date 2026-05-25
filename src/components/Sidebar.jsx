@@ -70,9 +70,6 @@ function Sidebar() {
             Reports
           </NavLink>
         </li>
-        <li>
-          <span className="sidebar-item">Settings</span>
-        </li>
       </ul>
       <button className="logout-btn" onClick={handleLogout}>
         Logout

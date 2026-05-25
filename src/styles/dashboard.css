@@ -146,6 +146,45 @@ table td {
   background: #7F1D1D;
 }
 
+.edit-btn {
+  background: #2563EB;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edit-btn:hover {
+  background: #1D4ED8;
+}
+
+.save-btn {
+  background: #10B981;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-btn {
+  background: #94A3B8;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.vehicle-edit-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
 .form-box {
   background: white;
   padding: 20px;

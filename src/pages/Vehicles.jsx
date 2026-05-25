@@ -16,6 +16,13 @@ function Vehicles() {
   const [cardUID, setCardUID] = useState("");
   const [vehiclePlate, setVehiclePlate] = useState("");
   const [balance, setBalance] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editValues, setEditValues] = useState({
+    name: "",
+    cardUID: "",
+    vehiclePlate: "",
+    balance: "",
+  });
 
   const fetchUsers = async () => {
     const snapshot = await getDocs(collection(db, "users"));
@@ -52,6 +59,51 @@ function Vehicles() {
     } catch (error) {
       console.error(error);
       alert("Error deleting vehicle");
+    }
+  };
+
+  const startEditing = (user) => {
+    setEditingId(user.id);
+    setEditValues({
+      name: user.name || "",
+      cardUID: user.cardUID || "",
+      vehiclePlate: user.vehiclePlate || "",
+      balance: String(user.balance ?? ""),
+    });
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditValues({
+      name: "",
+      cardUID: "",
+      vehiclePlate: "",
+      balance: "",
+    });
+  };
+
+  const saveEdit = async (id) => {
+    try {
+      const userRef = doc(db, "users", id);
+      await updateDoc(userRef, {
+        name: editValues.name,
+        cardUID: editValues.cardUID,
+        vehiclePlate: editValues.vehiclePlate,
+        balance: Number(editValues.balance),
+      });
+
+      alert("Vehicle updated successfully");
+      setEditingId(null);
+      setEditValues({
+        name: "",
+        cardUID: "",
+        vehiclePlate: "",
+        balance: "",
+      });
+      fetchUsers();
+    } catch (error) {
+      console.error(error);
+      alert("Error updating vehicle");
     }
   };
 
@@ -97,29 +149,99 @@ function Vehicles() {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.cardUID}</td>
-              <td>{user.vehiclePlate}</td>
-              <td>{user.balance}</td>
-              <td>{user.status}</td>
-              <td>
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  <button
-                    className={
-                      user.status === "active" ? "block-btn" : "unblock-btn"
-                    }
-                    onClick={() => toggleBlock(user.id, user.status)}
-                  >
-                    {user.status === "active" ? "Block" : "Unblock"}
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
+              {editingId === user.id ? (
+                <>
+                  <td>
+                    <input
+                      className="vehicle-edit-input"
+                      value={editValues.name}
+                      onChange={(e) =>
+                        setEditValues((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="vehicle-edit-input"
+                      value={editValues.cardUID}
+                      onChange={(e) =>
+                        setEditValues((prev) => ({
+                          ...prev,
+                          cardUID: e.target.value,
+                        }))
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="vehicle-edit-input"
+                      value={editValues.vehiclePlate}
+                      onChange={(e) =>
+                        setEditValues((prev) => ({
+                          ...prev,
+                          vehiclePlate: e.target.value,
+                        }))
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="vehicle-edit-input"
+                      type="number"
+                      value={editValues.balance}
+                      onChange={(e) =>
+                        setEditValues((prev) => ({
+                          ...prev,
+                          balance: e.target.value,
+                        }))
+                      }
+                    />
+                  </td>
+                  <td>{user.status}</td>
+                  <td>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <button className="save-btn" onClick={() => saveEdit(user.id)}>
+                        Save
+                      </button>
+                      <button className="cancel-btn" onClick={cancelEditing}>
+                        Cancel
+                      </button>
+                    </div>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{user.name}</td>
+                  <td>{user.cardUID}</td>
+                  <td>{user.vehiclePlate}</td>
+                  <td>{user.balance}</td>
+                  <td>{user.status}</td>
+                  <td>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <button
+                        className={
+                          user.status === "active" ? "block-btn" : "unblock-btn"
+                        }
+                        onClick={() => toggleBlock(user.id, user.status)}
+                      >
+                        {user.status === "active" ? "Block" : "Unblock"}
+                      </button>
+                      <button className="edit-btn" onClick={() => startEditing(user)}>
+                        Edit
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(user.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>
