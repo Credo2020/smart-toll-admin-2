@@ -1,15 +1,15 @@
 :root {
-  --bg: #eff6ff;
-  --panel: rgba(255, 255, 255, 0.94);
+  --bg: #f8fafc;
+  --panel: rgba(255, 255, 255, 0.96);
   --panel-strong: #ffffff;
-  --text: #0f172a;
-  --muted: #475569;
-  --border: rgba(191, 219, 254, 0.9);
-  --shadow: 0 22px 50px rgba(15, 23, 42, 0.12);
-  --shadow-soft: 0 12px 30px rgba(37, 99, 235, 0.12);
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --accent: #14b8a6;
+  --text: #111827;
+  --muted: #334155;
+  --border: rgba(15, 23, 42, 0.08);
+  --shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+  --shadow-soft: 0 14px 30px rgba(250, 204, 21, 0.14);
+  --primary: #facc15;
+  --primary-dark: #eab308;
+  --accent: #fde047;
   --danger: #ef4444;
   --danger-dark: #dc2626;
   --success: #10b981;
@@ -25,7 +25,7 @@
 .sidebar {
   width: 280px;
   min-height: calc(100vh - 24px);
-  background: linear-gradient(180deg, #0f172a 0%, #111827 52%, #0b1120 100%);
+  background: linear-gradient(180deg, #020617 0%, #111827 55%, #0f172a 100%);
   color: #ffffff;
   padding: 28px 20px;
   border-radius: 28px;
@@ -34,6 +34,7 @@
   flex-direction: column;
   position: sticky;
   top: 12px;
+  border: 1px solid rgba(250, 204, 21, 0.2);
 }
 
 .logo {
@@ -67,27 +68,29 @@
 }
 
 .sidebar-item:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(250, 204, 21, 0.12);
   transform: translateX(2px);
 }
 
 .sidebar-item.active {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(59, 130, 246, 0.85));
-  border-color: rgba(191, 219, 254, 0.35);
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.98), rgba(253, 224, 71, 0.9));
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #111827;
+  font-weight: 800;
 }
 
 .logout-btn {
   margin-top: 26px;
   width: 100%;
-  background: linear-gradient(135deg, #f87171, #ef4444);
-  color: #ffffff;
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #111827;
   border: none;
   padding: 13px 16px;
   border-radius: 14px;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.01em;
-  box-shadow: 0 12px 25px rgba(239, 68, 68, 0.25);
+  box-shadow: 0 12px 25px rgba(250, 204, 21, 0.28);
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
@@ -121,11 +124,11 @@
 }
 
 .admin-profile {
-  background: linear-gradient(135deg, #dbeafe, #e0f2fe);
-  color: #0f172a;
+  background: linear-gradient(135deg, #fef3c7, #fde047);
+  color: #111827;
   padding: 10px 16px;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 800;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -158,7 +161,7 @@
   right: -28px;
   bottom: -28px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.18), transparent 65%);
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.25), transparent 65%);
 }
 
 .card h3 {
@@ -171,7 +174,7 @@
 .card p {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--primary-dark);
+  color: #111827;
   position: relative;
   z-index: 1;
 }
@@ -209,7 +212,7 @@ table td {
 }
 
 table th {
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  background: linear-gradient(135deg, #fef3c7, #fde047);
   color: var(--text);
   font-size: 0.92rem;
   letter-spacing: 0.02em;
@@ -269,9 +272,9 @@ table td {
 }
 
 .unblock-btn {
-  background: linear-gradient(135deg, #6ee7b7, #10b981);
-  color: #ffffff;
-  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(135deg, #fde047, #facc15);
+  color: #111827;
+  box-shadow: 0 10px 20px rgba(250, 204, 21, 0.22);
 }
 
 .delete-btn {
@@ -281,20 +284,20 @@ table td {
 }
 
 .edit-btn {
-  background: linear-gradient(135deg, #93c5fd, #2563eb);
-  color: #ffffff;
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+  background: linear-gradient(135deg, #fef3c7, #facc15);
+  color: #111827;
+  box-shadow: 0 10px 20px rgba(250, 204, 21, 0.22);
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #86efac, #10b981);
-  color: #ffffff;
-  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(135deg, #fde047, #facc15);
+  color: #111827;
+  box-shadow: 0 10px 20px rgba(250, 204, 21, 0.22);
 }
 
 .cancel-btn {
-  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
-  color: #0f172a;
+  background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+  color: #111827;
   box-shadow: 0 10px 20px rgba(148, 163, 184, 0.22);
 }
 
@@ -357,11 +360,11 @@ table td {
 
 .register-btn {
   padding: 12px 20px;
-  background: linear-gradient(135deg, #34d399, #10b981);
-  color: #ffffff;
+  background: linear-gradient(135deg, #fde047, #facc15);
+  color: #111827;
   border-radius: 14px;
   font-weight: 800;
-  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.22);
+  box-shadow: 0 12px 24px rgba(250, 204, 21, 0.2);
 }
 
 .charts-grid {
