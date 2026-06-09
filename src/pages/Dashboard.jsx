@@ -12,6 +12,31 @@ function Dashboard() {
     blockedCards: 0,
   });
 
+  const getTxDate = (tx) => {
+    const timestampValue = tx.timestamp || tx.createdAt;
+    if (!timestampValue) return null;
+
+    if (timestampValue?.toDate) {
+      return timestampValue.toDate();
+    }
+
+    if (typeof timestampValue === "string") {
+      const parsed = new Date(timestampValue);
+      return isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    if (timestampValue instanceof Date) {
+      return timestampValue;
+    }
+
+    return null;
+  };
+
+  const getLocalDateKey = (date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+      date.getDate()
+    ).padStart(2, "0")}`;
+
   const fetchData = async () => {
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
@@ -30,13 +55,19 @@ function Dashboard() {
 
       const activeCount = usersData.filter((u) => u.status === "active").length;
       const blockedCount = usersData.filter((u) => u.status === "blocked").length;
-      const totalRevenue = transactionsData.reduce(
-        (sum, t) => sum + (t.amount || 0),
+      const todayKey = getLocalDateKey(new Date());
+      const todayTransactions = transactionsData.filter((tx) => {
+        const txDate = getTxDate(tx);
+        return txDate && getLocalDateKey(txDate) === todayKey;
+      });
+
+      const totalRevenue = todayTransactions.reduce(
+        (sum, t) => sum + (Number(t.amount) || 0),
         0
       );
 
       setStats({
-        vehiclesPassed: transactionsData.length,
+        vehiclesPassed: todayTransactions.length,
         revenueCollected: totalRevenue,
         activeCards: activeCount,
         blockedCards: blockedCount,
@@ -74,11 +105,11 @@ function Dashboard() {
           <p>UGX {stats.revenueCollected.toLocaleString()}</p>
         </div>
         <div className="card">
-          <h3>Active Cards</h3>
+          <h3>Total Active Cards</h3>
           <p>{stats.activeCards}</p>
         </div>
         <div className="card">
-          <h3>Blocked Cards</h3>
+          <h3>Total Blocked Cards</h3>
           <p>{stats.blockedCards}</p>
         </div>
       </div>
